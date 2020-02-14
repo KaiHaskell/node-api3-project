@@ -1,15 +1,14 @@
 const express = require("express");
-const helmet = require("helmet");
+const userRouter = require("./users/userRouter");
+
 const server = express();
+server.use(express.json());
 
 //Routers
-const userRouter = require("./users/userRouter");
-server.use("/api/users", userRouter);
 
-server.use(express.json());
-server.use(helmet());
+server.use("/api/users", logger, userRouter);
 
-server.get("/", logger, (req, res) => {
+server.get("/", (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`);
 });
 
