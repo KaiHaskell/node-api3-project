@@ -1,32 +1,58 @@
-const express = require('express');
+const express = require("express");
+const Users = require("./userDb");
+const Posts = require("../posts/postDb");
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
+//get a list of all users
+router.get("/", (req, res) => {
   // do your magic!
 });
 
-router.post('/:id/posts', (req, res) => {
+//get a specific user
+router.get("/:id", (req, res) => {
   // do your magic!
 });
 
-router.get('/', (req, res) => {
+//create new user
+router.post("/", (req, res) => {
+  User.insert(req.body)
+    .then(user => {
+      res.status(201).json(user);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        message: "Error adding new user"
+      });
+    });
+});
+
+//create new post for a user
+router.post("/:id/posts", (req, res) => {
+  const postInfo = { ...req.body, user_id: req.params.id };
+  Posts.insert(postInfo)
+    .then(post => {
+      res.status(201).json(post);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        message: "Error adding a new post"
+      });
+    });
+});
+
+//get a specific users complete post history
+router.get("/:id/posts", (req, res) => {
+  Users.getUsee;
+});
+
+router.delete("/:id", (req, res) => {
   // do your magic!
 });
 
-router.get('/:id', (req, res) => {
-  // do your magic!
-});
-
-router.get('/:id/posts', (req, res) => {
-  // do your magic!
-});
-
-router.delete('/:id', (req, res) => {
-  // do your magic!
-});
-
-router.put('/:id', (req, res) => {
+router.put("/:id", (req, res) => {
   // do your magic!
 });
 
